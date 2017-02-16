@@ -30,16 +30,29 @@ plt.show()
 
 ### your code here!  name your classifier object clf if you want the 
 ### visualization code (prettyPicture) to show you the decision boundary
+<<<<<<< HEAD
 from sklearn.neighbors import KNeighborsClassifier
 clf = KNeighborsClassifier(n_neighbors=8, algorithm = 'auto' )
 clf.fit(features_train, labels_train)
 pred = clf.predict(features_test)
+=======
+
+
+
+
+
+
+
+>>>>>>> 8b79cb95d8573bc933059ac5deaaee1fd81452d5
 
 try:
     prettyPicture(clf, features_test, labels_test)
 except NameError:
     pass
+<<<<<<< HEAD
 
 from sklearn.metrics import accuracy_score
 acc = accuracy_score(pred, labels_test)
 print acc
+=======
+>>>>>>> 8b79cb95d8573bc933059ac5deaaee1fd81452d5

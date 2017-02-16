@@ -16,6 +16,7 @@
 """
 
 import pickle
+<<<<<<< HEAD
 import pprint
 import decimal
 pp = pprint.PrettyPrinter(indent=2)
@@ -92,3 +93,9 @@ print "The number of POIs in the dataset:", poi_count
 #Missing POIs 4
 percent_non_missing2 = float(payment_count+10)/(total_count+10)
 print percent_non_missing2
+=======
+
+enron_data = pickle.load(open("../final_project/final_project_dataset.pkl", "r"))
+
+
+>>>>>>> 8b79cb95d8573bc933059ac5deaaee1fd81452d5
