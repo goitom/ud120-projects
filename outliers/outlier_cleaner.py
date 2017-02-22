@@ -11,10 +11,9 @@ def outlierCleaner(predictions, ages, net_worths):
         each tuple is of the form (age, net_worth, error).
     """
     
-    cleaned_data = []
-
     ### your code goes here
-
+    cleaned_data = [a_i - b_i for a_i, b_i in zip(predictions, net_worths)]
+    
     
     return cleaned_data
 
