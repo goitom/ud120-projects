@@ -12,7 +12,7 @@ def outlierCleaner(predictions, ages, net_worths):
     """
     
     ### your code goes here
-    cleaned_data = [a_i - b_i for a_i, b_i in zip(predictions, net_worths)]
+    cleaned_data = tuple(predictions, ages, net_worths)
     
     
     return cleaned_data

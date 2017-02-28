@@ -43,14 +43,24 @@ try:
 except NameError:
     pass
 plt.scatter(ages, net_worths)
-plt.show()
+#plt.show()
 
 
 ### identify and remove the most outlier-y points
 cleaned_data = []
 try:
     predictions = reg.predict(ages_train)
-    cleaned_data = outlierCleaner( predictions, ages_train, net_worths_train )
+    pred1 = map(lambda x: x[0], predictions)
+    ages_train1 = map(lambda x: x[0], ages_train)
+    net_worths_train1 = map(lambda x: x[0], net_worths_train)
+    diff = [abs(i - j) for i, j in zip(pred1, net_worths_train1)]
+    def getKey(item):
+        return item[3]
+
+    cleaned_data = sorted(zip(pred1, ages_train1, net_worths_train1, diff), key=getKey)[8:]
+
+    #cleaned_data = outlierCleaner( predictions, ages_train, net_worths_train )
+    print predictions
     print cleaned_data
 except NameError:
     print "your regression object doesn't exist, or isn't name reg"
@@ -71,7 +81,7 @@ if len(cleaned_data) > 0:
     ### refit your cleaned data!
     try:
         reg.fit(ages, net_worths)
-        plt.plot(ages, reg.predict(ages), color="blue")
+        #plt.plot(ages, reg.predict(ages), color="blue")
     except NameError:
         print "you don't seem to have regression imported/created,"
         print "   or else your regression object isn't named reg"
@@ -79,7 +89,7 @@ if len(cleaned_data) > 0:
     plt.scatter(ages, net_worths)
     plt.xlabel("ages")
     plt.ylabel("net worths")
-    plt.show()
+    #plt.show()
 
 
 else:
