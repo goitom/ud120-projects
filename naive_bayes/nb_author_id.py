@@ -11,6 +11,7 @@
 """
     
 import sys
+import sklearn
 from time import time
 sys.path.append("../tools/")
 from email_preprocess import preprocess
@@ -26,8 +27,29 @@ features_train, features_test, labels_train, labels_test = preprocess()
 
 #########################################################
 ### your code goes here ###
+def classify(features_train, labels_train):   
+    ### import the sklearn module for GaussianNB
+    ### create classifier
+    ### fit the classifier on the training features and labels
+    ### return the fit classifier
+    
+        
+    ### your code goes here!
+    from sklearn.naive_bayes import GaussianNB
+    clf = GaussianNB()
 
+    t0 = time()
+    fit_classifier = clf.fit(features_train, labels_train)
+    print "training time:", round(time()-t0, 3), "s"
+
+    t0 = time()
+    pred = clf.predict(features_test)
+    print "prediction time:", round(time()-t0, 3), "s"
+    from sklearn.metrics import accuracy_score
+    accuracy = accuracy_score(pred, labels_test)
+    return accuracy
 
 #########################################################
 
-
+clf = classify(features_train, labels_train)
+#print "Accuracy is ", clf
