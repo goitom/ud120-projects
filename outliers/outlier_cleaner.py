@@ -11,10 +11,9 @@ def outlierCleaner(predictions, ages, net_worths):
         each tuple is of the form (age, net_worth, error).
     """
     
-    cleaned_data = []
-
     ### your code goes here
-
+    cleaned_data = tuple(predictions, ages, net_worths)
+    
     
     return cleaned_data
 
