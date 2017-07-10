@@ -25,52 +25,27 @@ ages_train, ages_test, net_worths_train, net_worths_test = train_test_split(ages
 
 ### fill in a regression here!  Name the regression object reg so that
 ### the plotting code below works, and you can see what your regression looks like
+
 from sklearn import linear_model
 reg = linear_model.LinearRegression()
 reg.fit(ages_train, net_worths_train)
-slope = reg.coef_
-intercept = reg.intercept_
-print "Slope coefficient is", slope
-print "Intercept is", intercept
-
-train_score = reg.score(ages_train, net_worths_train)
-test_score = reg.score(ages_test, net_worths_test)
-print "The training score is", train_score
-print "The test data score is", test_score
 
 try:
     plt.plot(ages, reg.predict(ages), color="blue")
 except NameError:
     pass
 plt.scatter(ages, net_worths)
-#plt.show()
+plt.show()
 
 
 ### identify and remove the most outlier-y points
 cleaned_data = []
 try:
     predictions = reg.predict(ages_train)
-    pred1 = map(lambda x: x[0], predictions)
-    ages_train1 = map(lambda x: x[0], ages_train)
-    net_worths_train1 = map(lambda x: x[0], net_worths_train)
-    diff = [abs(i - j) for i, j in zip(pred1, net_worths_train1)]
-    def getKey(item):
-        return item[3]
-
-    cleaned_data = sorted(zip(pred1, ages_train1, net_worths_train1, diff), key=getKey)[8:]
-
-    #cleaned_data = outlierCleaner( predictions, ages_train, net_worths_train )
-    print predictions
-    print cleaned_data
+    cleaned_data = outlierCleaner( predictions, ages_train, net_worths_train )
 except NameError:
     print "your regression object doesn't exist, or isn't name reg"
     print "can't make predictions to use in identifying outliers"
-
-
-
-
-
-
 
 ### only run this code if cleaned_data is returning data
 if len(cleaned_data) > 0:
@@ -81,7 +56,7 @@ if len(cleaned_data) > 0:
     ### refit your cleaned data!
     try:
         reg.fit(ages, net_worths)
-        #plt.plot(ages, reg.predict(ages), color="blue")
+        plt.plot(ages, reg.predict(ages), color="blue")
     except NameError:
         print "you don't seem to have regression imported/created,"
         print "   or else your regression object isn't named reg"
@@ -89,9 +64,11 @@ if len(cleaned_data) > 0:
     plt.scatter(ages, net_worths)
     plt.xlabel("ages")
     plt.ylabel("net worths")
-    #plt.show()
+    plt.show()
 
 
 else:
     print "outlierCleaner() is returning an empty list, no refitting to be done"
 
+
+print reg.coef_
