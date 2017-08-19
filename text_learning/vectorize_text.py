@@ -43,14 +43,14 @@ for name, from_person in [("sara", from_sara), ("chris", from_chris)]:
         ### once everything is working, remove this line to run over full dataset
         temp_counter += 1
         path = os.path.join('..', path[:-1])
-        print path
+        #print path
         email = open(path, "r")
 
         ### use parseOutText to extract the text from the opened email
         text = parseOutText(email)
         ### use str.replace() to remove any instances of the words
         ### ["sara", "shackleton", "chris", "germani"]
-        replaced_words = ["sara", "shackleton", "chris", "germani"]
+        replaced_words = ["sara", "shackleton", "chris", "germani", "sshacklensf", "cgermannsf"]
         for replaced_word in replaced_words:
             text = text.replace(replaced_word, "")
         ### append the text to word_data
