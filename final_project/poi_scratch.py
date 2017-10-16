@@ -2,6 +2,8 @@
 
 import sys
 import pickle
+import matplotlib.pyplot
+import pprint
 sys.path.append("../tools/")
 
 from feature_format import featureFormat, targetFeatureSplit
@@ -9,78 +11,56 @@ from tester import dump_classifier_and_data
 ### Task 1: Select what features you'll use.
 ### features_list is a list of strings, each of which is a feature name.
 ### The first feature must be "poi".
-features_list = ['poi',
+financial_features_list = ['poi', 
 'salary', 
+'deferral_payments', 
+'total_payments', 
+'loan_advances', 
 'bonus', 
-'total_stock_value',
-'pct_email_from_poi',
-'pct_email_shared_reciept',
-'pct_email_to_poi'
-]
+'restricted_stock_deferred', 
+'deferred_income', 
+'total_stock_value', 
+'expenses', 
+'exercised_stock_options', 
+'other', 
+'long_term_incentive', 
+'restricted_stock', 
+'director_fees']
 
+email_features_list = ['poi', 'to_messages', 'email_address', 
+'from_poi_to_this_person', 'from_messages', 'from_this_person_to_poi', 
+'shared_receipt_with_poi']
 ### Load the dictionary containing the dataset
 with open("final_project_dataset.pkl", "r") as data_file:
     data_dict = pickle.load(data_file)
 
+print "The dataset has", len(data_dict), "observations."
+print "The dataset has", len(data_dict['CALGER CHRISTOPHER F']), "features."
+
+pp = pprint.PrettyPrinter(indent=4)
+pp.pprint(stuff)
+print(data_dict.keys())
 ### Task 2: Remove outliers
-temp_dict = {k: v for k, v in data_dict.iteritems() if \
-(v['total_stock_value'] != 'NaN' or \
-v['salary'] != 'NaN') and \
-v['to_messages'] != 'NaN' and \
-v['from_messages'] != 'NaN' \
-}
+data_dict.pop('key', None)
+data = featureFormat(data_dict, financial_features_list)
 
-### Task 3: Create new feature(s)
-for k in temp_dict:
-	temp_dict[k]['pct_email_to_poi'] = \
-	float(temp_dict[k]['from_this_person_to_poi'])/float(temp_dict[k]['from_messages'])
-	temp_dict[k]['pct_email_from_poi'] = \
-	float(temp_dict[k]['from_poi_to_this_person'])/float(temp_dict[k]['to_messages'])
-	temp_dict[k]['pct_email_shared_reciept'] = \
-	float(temp_dict[k]['shared_receipt_with_poi'])/float(temp_dict[k]['to_messages'])
+for point in data:
+	salary = point[1]
+	deferral_payments = point[2]
+	total_payments = point[3]
+	loan_advances = point[4]
+	bonus = point[5]
+	restricted_stock_deferred = point[6]
+	deferred_income = point[7]
+	total_stock_value = point[8]
+	expenses = point[9]
+	exercised_stock_options = point[10]
+	other = point[11]
+	long_term_incentive = point[12] 
+	restricted_stock = point[13]
+	director_fees = point[14]
+	matplotlib.pyplot.scatter( salary, total_stock_value )
 
-### Store to my_dataset for easy export below.
-my_dataset = temp_dict
-
-### Extract features and labels from dataset for local testing
-data = featureFormat(my_dataset, features_list, sort_keys = True)
-labels, features = targetFeatureSplit(data)
-
-### Task 4: Try a varity of classifiers
-### Please name your classifier clf for easy export below.
-### Note that if you want to do PCA or other multi-stage operations,
-### you'll need to use Pipelines. For more info:
-### http://scikit-learn.org/stable/modules/pipeline.html
-from sklearn import preprocessing
-scaler = preprocessing.MinMaxScaler()
-features = scaler.fit_transform(features)
-
-from sklearn.pipeline import Pipeline
-
-# Provided to give you a starting point. Try a variety of classifiers.
-from sklearn.naive_bayes import GaussianNB
-from sklearn.svm import SVC
-
-clf =  Pipeline(steps=[('scaling',scaler), ("SVC", SVC(kernel="rbf", gamma = 1.72
-, C = 10000))])
-
-### Task 5: Tune your classifier to achieve better than .3 precision and recall 
-### using our testing script. Check the tester.py script in the final project
-### folder for details on the evaluation method, especially the test_classifier
-### function. Because of the small size of the dataset, the script uses
-### stratified shuffle split cross validation. For more info: 
-### http://scikit-learn.org/stable/modules/generated/sklearn.cross_validation.StratifiedShuffleSplit.html
-from tester import test_classifier
-
-test_classifier(clf, my_dataset, features_list, folds = 1000)
-# Example starting point. Try investigating other evaluation techniques!
-from sklearn.cross_validation import train_test_split
-features_train, features_test, labels_train, labels_test = \
-    train_test_split(features, labels, test_size=0.3, random_state=42)
-
-### Task 6: Dump your classifier, dataset, and features_list so anyone can
-### check your results. You do not need to change anything below, but make sure
-### that the version of poi_id.py that you submit can be run on its own and
-### generates the necessary .pkl files for validating your results.
-
-dump_classifier_and_data(clf, my_dataset, features_list)
+matplotlib.pyplot.xlabel("salary")
+matplotlib.pyplot.ylabel("total_stock_value")
+matplotlib.pyplot.show()

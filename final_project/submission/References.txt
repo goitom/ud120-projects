@@ -5,3 +5,5 @@ https://stackoverflow.com/questions/39839112/the-easiest-way-for-getting-feature
 https://discussions.udacity.com/t/a-question-about-the-email-features-would-love-if-there-were-a-data-dictionary-about-the-email-features/273926
 http://scikit-learn.org/stable/modules/generated/sklearn.feature_selection.SelectKBest.html
 http://scikit-learn.org/stable/modules/pipeline.html
+https://stackoverflow.com/questions/5904969/how-to-print-a-dictionarys-key
+https://stackoverflow.com/questions/11277432/how-to-remove-a-key-from-a-python-dictionary
