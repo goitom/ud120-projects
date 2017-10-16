@@ -7,3 +7,4 @@ http://scikit-learn.org/stable/modules/generated/sklearn.feature_selection.Selec
 http://scikit-learn.org/stable/modules/pipeline.html
 https://stackoverflow.com/questions/5904969/how-to-print-a-dictionarys-key
 https://stackoverflow.com/questions/11277432/how-to-remove-a-key-from-a-python-dictionary
+https://discussions.udacity.com/t/task-1-using-kbest/325512/5

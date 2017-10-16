@@ -31,9 +31,10 @@ raw_features_list = ['poi',
 'from_messages', 
 'from_this_person_to_poi', 
 'shared_receipt_with_poi'
-'pct_email_from_poi',
-'pct_email_shared_reciept',
-'pct_email_to_poi'
+# ,
+# 'pct_email_from_poi',
+# 'pct_email_shared_reciept',
+# 'pct_email_to_poi'
 ]
 
 features_list = ['poi',
@@ -83,7 +84,7 @@ for point in outlier_check:
 
 # get list of keys to identify and remove outlier
 pp = pprint.PrettyPrinter(indent=4)
-pp.pprint(data_dict.keys())
+# pp.pprint(data_dict.keys())
 
 # Remove outlier and confirm its removal with a second plot
 data_dict.pop('TOTAL', None)
@@ -139,9 +140,9 @@ scaler = preprocessing.MinMaxScaler()
 features = scaler.fit_transform(features)
 selected_features = skb.fit_transform(features, labels)
 svc = SVC(kernel="rbf", gamma = 1.72, C = 10000)
-
+nb = GaussianNB()
 # Implement Pipeline
-clf =  Pipeline(steps=[("SKB", skb), ('scaling',scaler), ("SVC", svc)])
+clf =  Pipeline(steps=[("SKB", skb), ('scaling',scaler), ("NaiveBayes", nb)])
 features_selected=[raw_features_list[i+1] for i in skb.get_support(indices=True)]
 
 print 'Features selected by SelectKBest:'
